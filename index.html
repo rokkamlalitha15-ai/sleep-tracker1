@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sleep Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f8ff;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .container {
+            background: white;
+            width: 350px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #0066cc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Sleep Tracker</h1>
+
+        <label>Sleep Time:</label>
+        <input type="time" id="sleepTime">
+
+        <label>Wake Up Time:</label>
+        <input type="time" id="wakeTime">
+
+        <button onclick="calculateSleep()">Track Sleep</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculateSleep() {
+            let sleepTime = document.getElementById("sleepTime").value;
+            let wakeTime = document.getElementById("wakeTime").value;
+
+            if (!sleepTime || !wakeTime) {
+                document.getElementById("result").innerHTML =
+                    "Please enter both times.";
+                return;
+            }
+
+            let sleep = new Date("1970-01-01T" + sleepTime + ":00");
+            let wake = new Date("1970-01-01T" + wakeTime + ":00");
+
+            if (wake < sleep) {
+                wake.setDate(wake.getDate() + 1);
+            }
+
+            let diff = wake - sleep;
+            let hours = Math.floor(diff / (1000 * 60 * 60));
+            let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById("result").innerHTML =
+                `You slept for ${hours} hours and ${minutes} minutes.`;
+        }
+    </script>
+
+</body>
+</html>
